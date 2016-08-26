@@ -1,0 +1,13 @@
+{
+    "name": "drparham/mvc",
+    "description": "Simple Example of a MVC Framework in PHP",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "drparham",
+            "email": "dr.parham@gmail.com"
+        }
+    ],
+    "require": {}
+}
