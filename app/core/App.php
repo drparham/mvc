@@ -45,8 +45,9 @@ Class App {
 				$this->controller = '\\'.$this->route[0].'\\'.$this->route[1];
 				unset($url[0]);
 			}else {
-				echo "404 Page not Found";
-				die();
+				$this->route[2] = 'notFound';
+				$this->required = 'Home';
+				$this->controller = '\\App\Controllers\\Home';
 			}
 		}
 		
