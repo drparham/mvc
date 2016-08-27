@@ -11,6 +11,10 @@ Class Controller
 
 	public function view($name, $data = '')
 	{
+		// $config = new Config();
+		// var_dump($config);
+		// $app = $config->getConfig('app');
+		//var_dump($app);
 		require_once '../app/views/' . $name. '.php';
 	}
 

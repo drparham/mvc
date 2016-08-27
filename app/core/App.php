@@ -11,6 +11,7 @@ Class App {
 	protected $route = '';
 	protected $method = '';
 	protected $params = [];
+	public $name = '';
 
 	public function __construct()
 	{
@@ -70,6 +71,7 @@ Class App {
 		$this->required = $this->app['controller'];
 		$this->controller = $this->controller_namespace . $this->required;
 		$this->method = $this->app['method'];
+		$this->name = $this->app['name'];
 	}
 
 	private function loadController($url)
