@@ -14,7 +14,7 @@ You have the ability to create any Controllers you want, with any methods you wa
 This parent Controller class exposes a method for models, and views, it also has a default method for handling 404 errors.
 
 ## Very simple views
-Plain PHP viwe files, no templating system in place
+Plain PHP view files, no templating system in place
 
 ## Eloquent Models. 
 This system is pulling in Eloquent Models from the Laravel Framework. 
