@@ -2,16 +2,30 @@
 
 Class App {
 	
-	protected $controller = '\\App\\Controllers\\Home';
-	protected $required = 'Home';
+	protected $app = [];
+	protected $database = [];
+	protected $controller_namespace = '';
+	protected $controller = '';
+	protected $required = '';
 	protected $routes = '';
 	protected $route = '';
-	protected $method = 'index';
+	protected $method = '';
 	protected $params = [];
 
 	public function __construct()
 	{
 		//initialize App
+
+		//load config files
+		$this->loadConfigs();
+
+		//initalize defaults
+		$this->loadDefaults();
+
+		//initalize database
+		$this->loadDatabase();
+
+		//initialize routes
 		$router = Router::getInstance();
 		$this->routes = $router::getRoutes();
 		
@@ -19,11 +33,12 @@ Class App {
 		$url = $this->loadMethod($url);
 		$url = $this->loadParams($url);
 
+		//execute stack
 		call_user_func_array([$this->controller, $this->method], $this->params);
 
 	}
 
-	public function parseUrl()
+	private function parseUrl()
 	{
 
 		if(isset($_SERVER['REQUEST_URI'])) {
@@ -35,7 +50,29 @@ Class App {
 
 	}
 
-	public function loadController($url)
+	private function loadConfigs()
+	{
+		$config = new Config();
+		$this->database = $config->getConfig('database');
+		$this->app = $config->getConfig('app');
+
+	}
+
+	private function loadDatabase()
+	{
+		$database = new Database();
+		$database->setConfig($this->database);
+	}
+
+	private function loadDefaults()
+	{
+		$this->controller_namespace = $this->app['controller_namespace'];
+		$this->required = $this->app['controller'];
+		$this->controller = $this->controller_namespace . $this->required;
+		$this->method = $this->app['method'];
+	}
+
+	private function loadController($url)
 	{
 		if(isset($url[0])){
 			if(isset($this->routes[$url[0]]))
@@ -58,7 +95,7 @@ Class App {
 		return $url;
 	}
 
-	public function loadMethod($url)
+	private function loadMethod($url)
 	{
 		if(isset($this->route[2])){
 			if(method_exists($this->controller, $this->route[2])){
@@ -69,7 +106,7 @@ Class App {
 		return $url;
 	}
 
-	public function loadParams($url)
+	private function loadParams($url)
 	{
 		$this->params = $url ? array_values($url) : [];
 	}

@@ -9,6 +9,11 @@ Class Controller
 		return new $class;
 	}
 
+	public function view($name, $data = '')
+	{
+		require_once '../app/views/' . $name. '.php';
+	}
+
 	public function notFound()
 	{
 		echo "404 Page Not Found!!";
