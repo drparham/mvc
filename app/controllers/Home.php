@@ -28,8 +28,13 @@ Class Home extends Controller
 		return $this->view('home/show', $user);
 	}
 
-	public function test()
+	public function test($name)
 	{
-		echo "bob";
+		echo $name;
+	}
+
+	public function test2($name)
+	{
+		echo 'Hi ' . $name;
 	}
 }

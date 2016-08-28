@@ -31,7 +31,7 @@ Class App {
 		$this->routes = $router::getRoutes();
 		
 		$url = $this->loadController($this->parseUrl());
-		$url = $this->loadMethod($url);
+		//$url = $this->loadMethod($url);
 		$url = $this->loadParams($url);
 
 		//execute stack
@@ -76,35 +76,22 @@ Class App {
 
 	private function loadController($url)
 	{
-		if(isset($url[0])){
-			if(isset($this->routes[$url[0]]))
-			{
-				$this->route = $this->routes[$url[0]];
-				$this->required = $this->route[1];
-				$this->controller = '\\'.$this->route[0].'\\'.$this->route[1];
-				unset($url[0]);
-			}else {
-				$this->route[2] = 'notFound';
-				$this->required = 'Home';
-				$this->controller = '\\App\Controllers\\Home';
-			}
-		}
+		list($route, $url) = Router::getRoute($url);
 		
-	
+		if(is_null($route)){	
+			$this->required = 'Home';
+			$this->controller = '\\App\Controllers\\Home';
+			$this->method = 'notFound';
+		}else {
+			//$this->route = $this->routes[$url[0]];
+			$this->required = $route[1];
+			$this->controller = '\\'.$route[0].'\\'.$route[1];
+			$this->method = $route[2];
+		}
+
 		require_once '../app/controllers/' . $this->required .  '.php';
 
 		$this->controller = new $this->controller;
-		return $url;
-	}
-
-	private function loadMethod($url)
-	{
-		if(isset($this->route[2])){
-			if(method_exists($this->controller, $this->route[2])){
-				$this->method = $this->route[2];
-			}
-		}	
-		
 		return $url;
 	}
 
