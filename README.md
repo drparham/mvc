@@ -10,7 +10,7 @@ The route system currently is only supporting GET routes, will work on other HTT
 
 Or just pull in a routing package. Depends on how much i'm enjoying the process.
 
-Some examples of routes that work can be found in the [https://github.com/drparham/mvc/blob/master/routes/router.php](Routes.php) file. 
+Some examples of routes that work can be found in the [Router.php](https://github.com/drparham/mvc/blob/master/routes/router.php) file. 
 
 ## Very simple Controllers.
      
