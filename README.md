@@ -6,7 +6,11 @@ This is for educational purposes only. Although it could be used for a simple br
 The routing system is super simple.
 
 There is a routes folder, with a routes file inside. This file contains an array of your routes.
-Currently this system is too simplistic to capture more then one uri section.
+The route system currently is only supporting GET routes, will work on other HTTP methods soon(ish).
+
+Or just pull in a routing package. Depends on how much i'm enjoying the process.
+
+Some examples of routes that work can be found in the [Router.php](https://github.com/drparham/mvc/blob/master/routes/router.php) file. 
 
 ## Very simple Controllers.
      
