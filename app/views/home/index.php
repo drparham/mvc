@@ -9,7 +9,7 @@
 			if(isset($data)){
 				foreach($data as $user){
 				?>
-					<p><a href='email:<?=$user->email?>'><?=$user->username?></p>
+					<p><a href='mailto:<?=$user->email?>'><?=$user->username?></p>
 				<?php
 				}
 			}
