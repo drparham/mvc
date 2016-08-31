@@ -1,5 +1,7 @@
 <?php namespace App\Core;
 
+use Phroute\Phroute\Dispatcher;
+
 Class Router
 {
 	protected static $routes = [];
@@ -14,7 +16,8 @@ Class Router
 	{
 		if(static::$router === null){
 			static::$router = new static();
-			static::$routes = require_once '../routes/router.php';
+			require_once '../routes/router.php';
+			static::$routes = $router;
 		}
 		return static::$router;
 	}
@@ -24,49 +27,13 @@ Class Router
 		return static::$routes;
 	}
 
-	public static function getRoute($url)
+	public static function dispatchRoute()
 	{
-		$urlLength = count($url);
-		$routes = static::$routes;
-		$route = [];
-		$tempUrl = [];
-		foreach($routes as $key => $value)
-		{
-			//O(N)
-			$uri = explode('/', filter_var(rtrim($key, '/'), FILTER_SANITIZE_URL));
-			$uriLength = count($uri);
-			if($uriLength != $urlLength){
-				continue;
-			}
-
-			for($i=0; $i < $uriLength; $i++)
-			{
-				//O(N^2)
-				if(isset($url[$i]))
-				{
-					if($uri[$i] === $url[$i])
-					{
-						$route = $value;
-					}
-					elseif(strpos($uri[$i], '{') !== FALSE)
-					{
-						$tempUrl[] = $url[$i];
-						$route = $value;
-					}
-					else {
-						$tempUrl =[];
-						break;
-					}
-				}
-			}
-		}
-		if(empty($route)){
-			return [null, $url];
-		}
-		
-		return [$route, $tempUrl];
-
+		// print_r(static::$routes);
+		$dispatcher = new Dispatcher(static::$routes->getData());
+		return $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 	}
+
 
 	private function __clone()
 	{

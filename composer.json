@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "illuminate/database": "^5.3"
+        "illuminate/database": "^5.3",
+        "phroute/phroute": "^2.1"
     },
     "autoload": {
         "psr-4": {

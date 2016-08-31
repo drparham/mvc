@@ -1,9 +1,10 @@
 <?php 
 
-return [
-	'home' => ['App\\Controllers','Home','index'],
-	'office/{name}' => ['App\\Controllers','Home','test'],
-	'home-create' => ['App\\Controllers', 'Home', 'create'],
-	'home/create/{username}/{email}' => ['App\\Controllers','Home','create'],
-	'office/{name}/test' => ['App\\Controllers', 'Home', 'test2'],
-];
+use Phroute\Phroute\RouteCollector;
+$router = new RouteCollector();
+
+$router->get('/', ['App\\Controllers\Home', 'index']);
+$router->get('/office/{name}', ['App\\Controllers\Home', 'test']);
+$router->post('home/create', ['App\\Controllers\Home', 'create']);
+$router->get('office/{name}/test', ['App\\Controllers\Home', 'test2']);
+
